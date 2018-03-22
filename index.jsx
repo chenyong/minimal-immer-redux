@@ -4,7 +4,8 @@ import { render } from "react-dom";
 import { createStore, combineReducers } from "redux";
 import { Provider, connect } from "react-redux";
 
-let todos = (state0 = [], action) => {
+// pass in initial-state and action, get next-state
+let reducerTodos = (state0 = [], action) => {
   return produce(state0, state => {
     switch (action.type) {
       case "ADD_TODO":
@@ -27,7 +28,8 @@ let todos = (state0 = [], action) => {
   });
 };
 
-let filter = (state = "SHOW_ALL", action) => {
+// pass in initial-state and action, get next-state
+let reducerFilter = (state = "SHOW_ALL", action) => {
   switch (action.type) {
     case "SET_FILTER":
       return action.filter;
@@ -54,8 +56,8 @@ let actionSetFilter = filter => ({
 
 let store = createStore(
   combineReducers({
-    todos,
-    filter
+    reducerTodos,
+    reducerFilter
   })
 );
 
@@ -73,7 +75,6 @@ class Container extends React.Component {
       <div>
         <div>
           <input value={this.state.text} onChange={this.onChange.bind(this)} />
-          {" 23 "}
           <button onClick={this.onClick.bind(this)}>Add</button>
         </div>
         <div>
@@ -95,6 +96,7 @@ class Container extends React.Component {
   }
 }
 
+// connect store and actions with component ptops
 let ConnectedContainer = connect(
   state => ({ todos: state.todos }),
   dispatch => ({
