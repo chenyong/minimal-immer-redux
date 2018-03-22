@@ -79,7 +79,7 @@ class Container extends React.Component {
         </div>
         <div>
           {this.props.todos.map(todo => {
-            return <div key={todo.id}>todo</div>;
+            return <div key={todo.id}>{todo.text}</div>;
           })}
         </div>
       </div>
@@ -98,7 +98,9 @@ class Container extends React.Component {
 
 // connect store and actions with component ptops
 let ConnectedContainer = connect(
-  state => ({ todos: state.todos }),
+  state => {
+    return { todos: state.reducerTodos };
+  },
   dispatch => ({
     toggle: id => {
       dispatch(actionToggle(id));
